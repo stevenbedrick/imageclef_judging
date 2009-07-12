@@ -1,0 +1,77 @@
+<h1>List of Runs:</h1>
+
+
+<table border="1" width="100%" >
+  <tr>
+  <th> No. </th>
+  <th> Group Name </th>
+  <th> Run Name </th>
+  <th> File Name </th>
+  <th> Total Number of Images </th>
+  <th> Number of Topics </th>
+	<th>
+		Language
+	</th>
+	<th>
+		Vis/Mixed/Text
+	</th>
+	<th>
+		Auto/Manual
+	</th>
+	<th>
+		Training Data
+	</th>
+	
+	<th>
+		MAP
+	</th>
+	<th>
+		P30
+	</th>
+	<th>
+		BPREF
+	</th>
+
+  </tr>
+   
+
+<% begin %>
+  <% 
+      count=1
+	if @runsToShow
+		for r in @runsToShow 
+  %> 
+
+  <tr>
+    	<td align = "center" ><%= count %></td>
+      <td align = "center" ><%= r.group_name %></td>
+      <td align = "center" ><%= r.run_name %></td>
+      <td align = "center" ><%= link_to r.file_name, :action => 'showruntopics', :run_name_id => r.run_name_id %>  <br/>
+      <td align = "center" ><%= r.count %></td>
+    	<td align = "center" ><%= r.distinct_topics %></td>
+		<td>&nbsp;<%= r.run_name.language %></td>
+		<td>&nbsp;<%= r.run_name.mode %></td>
+		<td>&nbsp;<%= r.run_name.auto_manual %></td>
+		<td>&nbsp;<%= r.run_name.training_data %></td>
+		<td>
+			<%= r.run_name.results[0].map.to_f %>
+		</td>
+		<td>
+			<%= r.run_name.results[0].p30.to_f %>
+		</td>
+		<td>
+			<%= r.run_name.results[0].bpref.to_f %>
+		</td>
+
+  </tr>
+ <% 
+		count= count+1
+		end
+	end
+rescue
+@test = "There was an error running the ruby code for this page"
+end
+  %>
+    </table>
+
+<%= "Some debug stuff<br>#{@test}" if @test %>

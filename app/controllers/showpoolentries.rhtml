@@ -1,0 +1,172 @@
+<% content_for :custom_header do %>
+
+<%= javascript_include_tag JQUERY_FILE_NAME %>
+
+<script type="text/javascript" charset="utf-8">
+
+function markRelevance(radioButton) {
+		// first, figure out which image we're dealing with
+		var idStr = radioButton.id; // will be something like: mark_full_relevant_xxxxxx
+		var parts = idStr.split('_'); // ['mark','full','relevant', XXXX]
+		var recordId = parts[3];
+    var relevance=parts[1];
+		
+		// next, figure out the confidence score:
+		var confScore = radioButton.value;
+		
+		// now, if confScore is null or emptystring, unrecord
+		if (confScore == null || confScore == '' ) {
+			// unrecord
+		//	unmarkRelevant(imageId, true);
+    //alert(idStr)
+		} else {
+			// record
+			changeRelevance(recordId, confScore);
+     //alert(confScore)
+		}		
+	}
+
+	function changeRelevance(id_to_change, val_to_set) {
+		
+		// figure out classes:
+		
+		var classToAdd;
+		var classToRemove;
+		
+		switch(val_to_set) {
+			case '0':
+				classToAdd = 'not_relevant';
+				classToRemove = 'relevant partially_relevant';
+				break;
+			case '1':
+				classToAdd = 'partially_relevant';
+				classToRemove = 'relevant not_relevant';
+				break;
+      case '2':
+				classToAdd = 'relevant';
+				classToRemove = 'not_relevant partially_relevant';
+				break;  
+			default:
+				classToAdd = '';
+				classToRemove= '';
+		}
+    	var successFunction = function(id) {
+			$('#row_' + id_to_change).addClass(classToAdd);
+			$('#row_' + id_to_change).removeClass(classToRemove);
+		}
+		
+		var failureFunction = function(err_xhr) {
+			alert(err_xhr);
+			$('input[name=mark_relevant_' + id_to_change + ']').attr('checked','');
+		}
+    
+    var target_url='<%=url_for :controller=> :judgment, :action=> :record_relevance_judgement%>'
+    $.ajax({
+    url: target_url,
+    data: {pool_entry_id: id_to_change, confidence: val_to_set},
+    success: successFunction,
+    error: failureFunction
+  } ) ;
+  
+}
+
+
+
+</script>
+
+<style> 
+
+
+	tr.relevant {
+		background-color: #B4EEBE;
+	}
+	
+	tr.partially_relevant {
+		background-color: #BDDEE6;
+	}
+	
+	tr.not_relevant {
+		background-color: #DEA199;
+	}
+	
+</style>
+
+<% end %>
+
+<% if @entries.size == 0 %>
+
+Sorry,there are not records for this topic
+	
+<% else %>
+
+<p/>
+
+<% if params[:non_judged] %>        
+<%= link_to 'Show All Pool Entries', :action => :showpoolentries, :topic_id => @topic_id, :pool_id => @pool_id %>
+<% else %>
+<%= link_to 'Show Only Non-Judged Pool Entries', :action => :showpoolentries, :topic_id => @topic_id, :pool_id => @pool_id, :non_judged => 't' %>
+<% end %>  
+
+<p/>
+
+          <table border="1" width="100%" >
+          <tr>
+          <th> Frequency </th>
+          <th> Topic </th>
+          <th> Image </th>
+          <th> Title </th>
+          <th> Caption </th>
+          <th> Full Caption </th>
+          <th> Relevant? </th>
+          </tr>
+           
+          <% 
+                count=1
+                for relImage in @entries
+                
+                
+                recordJudgment=relImage.judgments.first #.judgmentForUser(current_user)
+                relevance=nil
+                if not recordJudgment.nil?
+                  relevance=recordJudgment.relevance
+                end 
+                
+                thisClass=""
+                case relevance
+                    when 0
+                      thisClass='not_relevant'
+                    when 1
+                      thisClass='partially_relevant'
+                    when 2
+                      thisClass='relevant'
+                 end
+
+          %>
+          
+            <tr id="row_<%= relImage.id %>" class="<%=thisClass%>" >
+            <td ><%= relImage.frequency %></td>
+            <td><%= relImage.topic.iclef_topic_number %>
+            <td><%= link_to( image_tag(relImage.record.image_full_path, html_options={:size =>"70x70"}) , {:controller => "record", :action => "show", :id => relImage.record.id}, {:target => '_blank'})%>  <br/><%= link_to 'link', relImage.record.figure_url %><br/><%= relImage.record.image_local_name.split('.')[0] %></td>
+            <td><%= relImage.record.title %></td>
+            <td><%= relImage.record.caption %></td>    
+            <td><%= relImage.record.parsed_caption %></td>   
+            <td align="left" id="relevance_<%= relImage.id %>">
+            <input type="radio" class="relevance_feedback" name="mark_relevant_<%= relImage.id %>" <%= (relevance == 2) ? 'checked="checked"' : '' %>  id="mark_full_relevant_<%= relImage.id %>" value="2" onclick="markRelevance(this);" /><label for="mark_relevant_<%= relImage.id %>" >Relevant</label><br/>
+            <input type="radio" class="relevance_feedback" name="mark_relevant_<%= relImage.id %>" <%= (relevance == 1) ? 'checked="checked"' : '' %> id="mark_part_relevant_<%= relImage.id %>" value="1" onclick="javascript:markRelevance(this);"/><label for="mark_part_relevant_<%= relImage.id %>">Partially Relevant</label><br/>
+            <input type="radio" class="relevance_feedback" name="mark_relevant_<%= relImage.id %>" <%= (relevance == 0) ? 'checked="checked"' : '' %> id="mark_not_relevant_<%= relImage.id %>" value="0" onclick="javascript:markRelevance(this);"/><label for="mark_not_relevant_<%= relImage.id %>">Not Relevant</label><br/>
+            </td>
+            </tr>
+          <% 
+             count= count+1
+             end 
+          %>
+          
+          </table>
+  <% end %>
+  <%= will_paginate @entries %>
+  <form action="<%= url_for :action => :showpoolentries %>">
+	<input type="hidden" name="topic_id" value="<%= @topic_id %>" />
+	<input type="hidden" name="pool_id" value="<%= @pool_id %>" />
+	<input type="hidden" name="non_judged" value="<%= h params[:non_judged] %>">
+	Go to page: <input type="text" name="page" size="3" value="<%= h @page_number %>"/><input type="submit" value="Go!"/>
+  </form>

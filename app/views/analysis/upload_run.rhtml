@@ -1,0 +1,11 @@
+<h1>File Upload</h1>
+<%= flash[:notice] %>
+
+<% form_tag ({:action => 'view_run'}, 
+                        :multipart => true, :target=>'body') do %>
+<p><label for="upload_file">Select File</label> : 
+<%= file_field 'upload', 'file' %></p>
+
+<%= submit_tag "Upload" %>
+
+<% end %>

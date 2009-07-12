@@ -1,0 +1,22 @@
+<h2> Run Name:<%= @thisRunName %> </h2>
+<table border="1" >
+  <tr>
+  <th> Topic No. </th>
+  <th> Total Number of Images </th>
+  </tr>
+   
+
+
+  <% 
+      for r in @runEntriesByTopic
+  %> 
+
+	<tr>
+	<td align = "center" ><a href="<%= url_for :controller=> :group, :action => :showrunentries, :topic_id=> r[3], :run_name_id => @runID %>" target='footer' onClick="top.header.location='<%= url_for :controller=> :group, :action => :showgroupheader, :topic_id=> r[3] %>';"><%= r[0] %></a></td>
+	<td align = "center" ><%= r[2] %></td>
+
+  </tr>
+ <% 
+    end 
+  %>
+    </table>

@@ -1,0 +1,2 @@
+class RunController < ApplicationController
+end

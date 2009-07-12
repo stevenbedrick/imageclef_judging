@@ -1,0 +1,24 @@
+
+
+<h1>Pools in database:</h1>
+<FORM NAME="pools" ID="poolDropDown", action="<%= url_for :controller=> :pool, :action => :showtopic %>">
+<SELECT NAME="pool_id" onchange="document.getElementById('poolDropDown').submit();">
+<OPTION VALUE= "" > Please select </OPTION>
+<%for pool in @pools  %>
+<OPTION VALUE= "<%= pool.id%>" ><%= pool.pool_name%></OPTION>
+
+<% end %>
+
+</SELECT>
+</FORM>
+
+
+
+
+
+
+
+
+
+
+

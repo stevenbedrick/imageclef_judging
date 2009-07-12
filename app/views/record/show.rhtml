@@ -1,0 +1,27 @@
+<% content_for :title do %>
+Show: <%= @record.figure_id %>
+<% end %>
+
+Figure ID: <%= @record.figure_id %>
+
+<p/>
+
+Title: <%= @record.title %>
+
+<p/>
+
+Caption: <%= @record.parsed_caption %>
+
+<p/>
+
+Full Caption: <%= @record.full_caption %>
+
+<p/>
+
+<img src="<%=image_path(@record.image_full_path) %>">
+<p/>
+
+<p/>
+<br>
+<p/>
+<br>

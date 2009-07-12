@@ -1,0 +1,42 @@
+
+
+<h1>Runs submitted:</h1>
+<FORM NAME="runNames" ID="runNameDropDown", action="<%= url_for :controller=> :group, :action => :showrunentries %>">
+<SELECT NAME="run_name_id" onchange="document.getElementById('runNameDropDown').submit();">
+<OPTION VALUE= "" > Please select </OPTION>
+<%for runs in @runsNamesToShow  %>
+<OPTION VALUE= "<%= runs.id%>" ><%= runs.file_name%></OPTION>
+
+<% end %>
+
+</SELECT>
+</FORM>
+
+<table border="1">
+	<tr>
+		<th>
+			File Name
+		</th>
+		<th>
+			Language
+		</th>
+		<th>
+			Vis/Mixed/Text
+		</th>
+		<th>
+			Auto/Manual
+		</th>
+		<th>
+			Training Data
+		</th>
+	</tr>
+	<% for runs in @runsNamesToShow %>
+	<tr>
+		<td><%= link_to runs.file_name, :controller => :group, :action => :showrunentries, :run_name_id => runs.id %></td>
+		<td>&nbsp;<%= runs.language %></td>
+		<td>&nbsp;<%= runs.mode %></td>
+		<td>&nbsp;<%= runs.auto_manual %></td>
+		<td>&nbsp;<%= runs.training_data %></td>
+	</tr>
+	<% end %>
+</table>

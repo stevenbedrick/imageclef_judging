@@ -1,0 +1,14 @@
+<html>
+
+<head> 
+<title> Pools </title>
+<%= current_user.login %>
+<%= link_to 'logout', :controller => "account", :action => "logout" %>
+<%=yield :custom_header %>
+
+
+</head>
+<body>
+<%= yield %>
+</body>
+</html>

@@ -1,0 +1,27 @@
+
+
+<h1>Topics in this pool:</h1>
+<FORM NAME="pools" ID="topicsDropDown", action="<%= url_for :controller=> :pool, :action => :showPoolFrames %>">
+<input type="hidden" name="pool_id" value="<%=@thisPool.id%>"/>
+<input type="checkbox" name="rsvp" value="t" id="rsvp_checkbox"/> <label for="rsvp_checkbox">RSVP Result View?</label><br/>
+<input type="checkbox" name="non_judged" value="t" id="nj_checkbox"/><label for="nj_checkbox">Only show non-judged images?</label><br/>
+<SELECT NAME="topic_id" onchange="document.getElementById('topicsDropDown').submit();">
+<OPTION VALUE= "" > Please select </OPTION>
+<%for topic in @topics  %>
+<OPTION VALUE= "<%= topic.id%>" ><%= topic.iclef_topic_number%> - <%=topic.topic_text%></OPTION>
+
+<% end %>
+
+</SELECT>
+</FORM>
+
+
+
+
+
+
+
+
+
+
+

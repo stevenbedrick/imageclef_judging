@@ -1,0 +1,7 @@
+<h1>Runs submitted:</h1>
+
+
+  <% @runsNamesToShow.each { |c| %>
+  <%=c.file_name %>
+  <br/>
+<% } %>

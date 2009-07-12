@@ -1,0 +1,24 @@
+<html>
+
+<head>
+	<title> ImageCLEF 2008 Groups </title>
+</head>
+
+	<frameset rows="200, *">
+		<frameset cols="20%,75%" frameborder="0" border="0" framespacing="0">
+			<--! Show Navigation Menu  -->
+			<frame src="<%= url_for :action=> :frame_index %>" name='nav'">
+			<--! Show Topic Samples and Query  -->
+			<frame src="<%= url_for :action=> :showgroupheader, :topic_id => params[:topic_id] %>" name='header'>
+		</frameset>
+		
+		<--! Show Results -->
+		<frame src="<%= url_for :action => :showrunentries, :topic_id => params[:topic_id] , :run_name_id => params[:run_name_id] %>" name='footer'>
+
+	</frameset>
+
+
+
+
+
+</html>

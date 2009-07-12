@@ -1,0 +1,15 @@
+<h1 style="margin-bottom: 0px;">
+<%=@topic.iclef_topic_number%>
+<%=@topic.topic_text%>
+</h1>
+<table  >
+<tr>
+<% 
+    for top in @topicImages    
+ %>
+ <td ><img src="/iclef09_judge/images/topic_images/<%= top.image_name %>" width="100" height="100"/></>
+ <br/>
+ <%  end  %>
+</tr>          
+</table>          
+</br>

@@ -1,0 +1,14 @@
+<h1>List of groups:</h1>
+
+<FORM NAME="groups" ID="grpDropDown" action="<%= url_for :controller=> :group, :action => :showruns %>">
+
+<SELECT NAME="group_id" onchange="document.getElementById('grpDropDown').submit();">
+
+<OPTION VALUE= "" > Please select </OPTION>
+<%for grp in @groups  %>
+<OPTION VALUE= "<%= grp.id%>" ><%= grp.group_name%></OPTION>
+
+<% end %>
+
+</SELECT>
+</FORM>

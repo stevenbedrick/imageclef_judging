@@ -1,0 +1,29 @@
+
+<br>
+<%= flash[:notice] %>
+<br>
+<%= link_to "Upload Another", :controller => "analysis", :action => "upload_run" %>
+<br>
+<% if @images %>
+	Select a Topic:
+	<FORM NAME="analysis" ID="anlDropDown" action="<%= url_for :controller=> :analysis, :action => :view_run %>">
+		<SELECT NAME="topic_id" onchange="document.getElementById('anlDropDown').submit();">
+			<OPTION VALUE= "<%= @topic %>" ><%= @topic %></OPTION>
+			<%keys = @image_array.keys
+				keys.sort!
+				keys.each do |key| %>
+					<OPTION VALUE= "<%= key %>" ><%= key %></OPTION>
+				<% end %>
+		</SELECT>
+	</FORM>
+	
+	<%= will_paginate @images %>
+	<BR>
+	<% @images.each do |xx| %>
+		<%= "Image name: #{xx}"%><br>
+	<% end %>
+	<%= will_paginate @images %>
+<% end %>
+
+
+

@@ -1,0 +1,22 @@
+
+	<table CELLSPACING=10>
+	
+		<tr>
+			<td><h2 style="margin-bottom: 0px;"> Topic: <%=@topic.iclef_topic_number%></h2></td>
+			
+			<td><h2 style="margin-bottom: 0px;"> Query: "<%=@topic.topic_text%>"</h2></td>
+		</tr>
+		<tr>
+			<table>
+				<tr>
+				<% 
+				    for top in @topicImages    
+				 %>
+				 <td ><%= link_to( image_tag(url_for("/images/topic_images/" + top.image_name), html_options={:size =>"100x100"} ) )%></td>
+				 
+				 <%  end  %>
+				</tr>
+			</table>
+		</tr>          
+	</table>          
+	

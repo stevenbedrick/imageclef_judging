@@ -1,0 +1,66 @@
+<%= link_to("View Groups",:controller=> "group", :action=>"index") %>
+<% if @entries.size == 0 %>
+
+Sorry, there are not any records for this run.
+
+<% else %>
+		
+          <table border="1" width="100%" >
+          <tr>
+          <th> Rank </th>
+          <th> Topic </th>
+          <th> Image </th>
+          <th> Title </th>
+          <th> Caption </th>
+          <th> Full Caption </th>
+          <th> Score </th>
+		  <th> Relevance </th>
+		  <th> Message </th>
+          </tr>
+           
+          <% 
+                count=1
+                for relImage in @entries
+				cur_t = @new_entries[count-1]
+				
+					case cur_t[0] #gives the relevance for this judgment
+						when nil
+							color = 'white' #white
+						when '0'
+							color = '#FF5757' #red
+						when '1'
+							color = '#5781FF' #blue
+						when '2'
+							color = '#5CFF57' #green
+					end
+					if relImage.id.to_i == cur_t[1].to_i
+						message = "Run Entry Ids match"
+					else
+						message = "BAD MATCH: Rel #{relImage.id} My:#{cur_t[1]}"
+						color = 'yellow' #Database Error
+					end
+          %>
+          
+          
+          
+			
+          
+            <tr id="row_<%= relImage.id %>" BGCOLOR="<%= color %>">
+            <td ><%= relImage.rank %></td>
+            <td><%= relImage.topic.iclef_topic_number %></td>
+            <td ><%= link_to(image_tag(relImage.record.image_full_path, html_options={:size =>"70x70"}), :controller => "record", :action => "show", :id => relImage.record.id)%>  </td>
+            <td><%= relImage.record.title %></td>
+            <td><%= relImage.record.caption %></td>    
+            <td><%= relImage.record.parsed_caption %></td>
+            <td align="center" ><%= number_with_precision(relImage.score,2) %></td>
+			<td><%= cur_t[0] %></td>
+			<td><%= message %></td>
+            </tr>
+          <% 
+             count= count+1
+             end 
+          %>
+          
+          </table>
+  <% end %>
+  <%= will_paginate @entries %>
