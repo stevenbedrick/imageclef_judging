@@ -62,4 +62,4 @@ end
 require 'will_paginate'
 JQUERY_FILE_NAME = 'jquery-1.2.6.min.js'
 
-ActionController::AbstractRequest.relative_url_root = '/iclef09_judge'
+#ActionController::AbstractRequest.relative_url_root = '/iclef09_judge'
