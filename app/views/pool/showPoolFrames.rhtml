@@ -6,7 +6,7 @@
 
 <frameset rows="25%, *">
 	<frame src="<%= url_for :action => :showPoolHeader, :topic_id => params[:topic_id] %>">
-	<frame src="<%= url_for :action => :showpoolentries, :topic_id => params[:topic_id] , :pool_id=>params[:pool_id], :rsvp => params[:rsvp], :non_judged => params[:non_judged]%>">
+	<frame src="<%= url_for :action => :decide_case_based_or_common, :topic_id => params[:topic_id] , :pool_id=>params[:pool_id], :rsvp => params[:rsvp], :non_judged => params[:non_judged]%>">
 </frameset>
 
 </html>

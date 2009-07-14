@@ -56,10 +56,10 @@ Rails::Initializer.run do |config|
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
-
 end
 
 require 'will_paginate'
 JQUERY_FILE_NAME = 'jquery-1.2.6.min.js'
 
-#ActionController::AbstractRequest.relative_url_root = '/iclef09_judge'
+ICLEF_TOPIC_NUMBER_CASE_BASED_START = 26
+ICLEF_TOPIC_NUMBER_CASE_BASED_END = 30
