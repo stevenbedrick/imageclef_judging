@@ -145,7 +145,7 @@ Sorry,there are not records for this topic
             <tr id="row_<%= relImage.id %>" class="<%=thisClass%>" >
             <td ><%= relImage.frequency %></td>
             <td><%= relImage.topic.iclef_topic_number %>
-            <td><%= link_to( image_tag(relImage.record.image_full_path, html_options={:size =>"70x70"}) , {:controller => "record", :action => "show", :id => relImage.record.id}, {:target => '_blank'})%>  <br/><%= link_to 'link', relImage.record.figure_url %><br/><%= relImage.record.image_local_name.split('.')[0] %></td>
+            <td><%= link_to( image_tag(relImage.record.thumbnail_path, html_options={:size =>"70x70"}) , {:controller => "record", :action => "show", :id => relImage.record.id}, {:target => '_blank'})%>  <br/><%= link_to 'link', relImage.record.figure_url %><br/><%= relImage.record.image_local_name.split('.')[0] %></td>
             <td><%= relImage.record.title %></td>
             <td><%= relImage.record.parsed_caption %></td>   
             <td align="left" id="relevance_<%= relImage.id %>">

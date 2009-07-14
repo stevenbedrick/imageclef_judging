@@ -166,7 +166,7 @@ Frequency: <%= entry.frequency %>
        <td width="100px">
         <%if not records[0].nil? %>
 
-               <%=  link_to( image_tag(records[0].image_full_path, html_options={:size =>"70x70"}) ,
+               <%=  link_to( image_tag(records[0].thumbnail_path, html_options={:size =>"70x70"}) ,
                 {:controller => "record", :action => "show", :id => records[0].id},
                 {:target => '_blank'})%>  <br/><%= link_to 'Show image', records[0].figure_url,:target => '_blank' %><br/>
               <%= records[0].image_local_name.split('.')[0] %>
@@ -176,7 +176,7 @@ Frequency: <%= entry.frequency %>
         <td width="100px">
              <%if not records[1].nil? %>
 
-               <%=  link_to( image_tag(records[0].image_full_path, html_options={:size =>"70x70"}) ,
+               <%=  link_to( image_tag(records[0].thumbnail_path, html_options={:size =>"70x70"}) ,
                 {:controller => "record", :action => "show", :id => records[1].id},
                 {:target => '_blank'})%>  <br/><%= link_to 'Show image', records[1].figure_url,:target => '_blank' %><br/>
               <%= records[1].image_local_name.split('.')[0] %>
@@ -187,7 +187,7 @@ Frequency: <%= entry.frequency %>
            <td width="100px">
              <%if not records[2].nil? %>
 
-               <%=  link_to( image_tag(records[2].image_full_path, html_options={:size =>"70x70"}) ,
+               <%=  link_to( image_tag(records[2].thumbnail_path, html_options={:size =>"70x70"}) ,
                 {:controller => "record", :action => "show", :id => records[2].id},
                 {:target => '_blank'})%>  <br/><%= link_to 'Show image', records[2].figure_url,:target => '_blank' %><br/>
               <%= records[2].image_local_name.split('.')[0] %>
@@ -199,7 +199,7 @@ Frequency: <%= entry.frequency %>
            <td width="100px">
              <%if not records[3].nil? %>
 
-               <%=  link_to( image_tag(records[3].image_full_path, html_options={:size =>"70x70"}) ,
+               <%=  link_to( image_tag(records[3].thumbnail_path, html_options={:size =>"70x70"}) ,
                 {:controller => "record", :action => "show", :id => records[3].id},
                 {:target => '_blank'})%>  <br/><%= link_to 'Show image', records[3].figure_url,:target => '_blank' %><br/>
               <%= records[3].image_local_name.split('.')[0] %>
@@ -211,7 +211,7 @@ Frequency: <%= entry.frequency %>
            <td width="100px">
              <%if not records[4].nil? %>
 
-               <%=  link_to( image_tag(records[4].image_full_path, html_options={:size =>"70x70"}) ,
+               <%=  link_to( image_tag(records[4].thumbnail_path, html_options={:size =>"70x70"}) ,
                 {:controller => "record", :action => "show", :id => records[4].id},
                 {:target => '_blank'})%>  <br/><%= link_to 'show image', records[4].figure_url,:target => '_blank' %><br/>
               <%= records[4].image_local_name.split('.')[0] %>
@@ -223,7 +223,7 @@ Frequency: <%= entry.frequency %>
            <td width="100px">
              <%if not records[5].nil? %>
 
-               <%=  link_to( image_tag(records[5].image_full_path, html_options={:size =>"70x70"}) ,
+               <%=  link_to( image_tag(records[5].thumbnail_path, html_options={:size =>"70x70"}) ,
                 {:controller => "record", :action => "show", :id => records[5].id},
                 {:target => '_blank'})%>  
                 <br/><%= link_to 'Show image', records[5].figure_url,:target => '_blank' %><br/>

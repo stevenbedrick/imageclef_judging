@@ -7,4 +7,11 @@ class Record < ActiveRecord::Base
  #  "C:\\Documents and Settings\\kalpathy\\Desktop\\iclef08\\public\\images\\images" + self.image_local_name
   
   end
+  
+  def thumbnail_path
+    "http://skynet.ohsu.edu/~bedrick/ic09_judge_images/THUMBS/lr_" + self.image_local_name
+    
+  end
+  
+  
 end
