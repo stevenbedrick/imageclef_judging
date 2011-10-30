@@ -4,7 +4,7 @@
 Sorry, there are not any records for this run.
 
 <% else %>
-		
+
           <table border="1" width="100%" >
           <tr>
           <th> Rank </th>
@@ -17,12 +17,12 @@ Sorry, there are not any records for this run.
 		  <th> Relevance </th>
 		  <th> Message </th>
           </tr>
-           
-          <% 
+
+          <%
                 count=1
                 for relImage in @entries
 				cur_t = @new_entries[count-1]
-				
+
 					case cur_t[0] #gives the relevance for this judgment
 						when nil
 							color = 'white' #white
@@ -40,27 +40,27 @@ Sorry, there are not any records for this run.
 						color = 'yellow' #Database Error
 					end
           %>
-          
-          
-          
-			
-          
+
+
+
+
+
             <tr id="row_<%= relImage.id %>" BGCOLOR="<%= color %>">
             <td ><%= relImage.rank %></td>
             <td><%= relImage.topic.iclef_topic_number %></td>
             <td ><%= link_to(image_tag(relImage.record.image_full_path, html_options={:size =>"70x70"}), :controller => "record", :action => "show", :id => relImage.record.id)%>  </td>
             <td><%= relImage.record.title %></td>
-            <td><%= relImage.record.caption %></td>    
+            <td><%= relImage.record.caption %></td>
             <td><%= relImage.record.parsed_caption %></td>
             <td align="center" ><%= number_with_precision(relImage.score,2) %></td>
 			<td><%= cur_t[0] %></td>
 			<td><%= message %></td>
             </tr>
-          <% 
+          <%
              count= count+1
-             end 
+             end
           %>
-          
+
           </table>
   <% end %>
   <%= will_paginate @entries %>

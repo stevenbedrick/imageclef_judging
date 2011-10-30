@@ -131,7 +131,7 @@ end %>
           records = @records_by_article_url[article_url] #All records by article URL (Hashmap) ==> to show
           #all images of a certain article
 
-   
+
 
          recordJudgment=entry.judgments.first #.judgmentForUser(current_user)
               relevance=nil
@@ -156,7 +156,7 @@ end %>
 
   <%=  link_to records[0].title,
                 records[0].article_url,
-                :target => '_blank'%>  
+                :target => '_blank'%>
 <br/>
 Frequency: <%= entry.frequency %>
 <br/>
@@ -226,19 +226,19 @@ Frequency: <%= entry.frequency %>
 
                <%=  link_to( image_tag(records[5].thumbnail_path, html_options={:size =>"70x70"}) ,
                 {:controller => "record", :action => "show", :id => records[5].id},
-                {:target => '_blank'})%>  
+                {:target => '_blank'})%>
                 <br/><%= link_to 'Show image', records[5].figure_url,:target => '_blank' %><br/>
               <%= records[5].image_local_name.split('.')[0] %>
 
         <%end %>
-     
+
       </tr>
      </table>
 
 
 
 </td>
-   
+
          <td align="left" id="relevance_<%= entry.id %>" width="200px"> <!--JUDGEMENT BUTTONS-->
 
 

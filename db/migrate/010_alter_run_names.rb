@@ -7,6 +7,6 @@ class AlterRunNames < ActiveRecord::Migration
 
   def self.down
     remove_column :run_names, :run_name
-  
+
   end
 end

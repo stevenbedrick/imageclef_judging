@@ -5,41 +5,41 @@
 <script src="/javascripts/jquery-1.2.6.min.js" type="text/javascript"></script>
 
 <script type="text/javascript" charset="utf-8">
-	
+
 		var entries = [<%= @entries.collect { |e| e.id }.join(',') %>];
-		
+
 		var entry_id_fname_hash = {
 			<%= @entries.collect { |e| "#{e.id}: '#{e.record.image_full_path}'"}.join(",\n") %>
 		};
-		
-		
+
+
 		var showingIdx = 0;
 		var maxViewedIdx = 0;
-		
+
 		// we'll have loaded the first 20
 		var maxLoadedIdx = 20;
-		
+
 		var keyCommands = function (ev) {
-			
+
 			// necessary for dealing with arrow keys- they don't send a charCode, and ev.which doesn't
 			// seem to get them in a useful way
 			var whichPress = ev.keyCode;
 //				alert(ev);
 			if (whichPress == 39) {
 				// right arrow
-				showNext();	
-				return;				
+				showNext();
+				return;
 			}
-			
+
 			if (whichPress == 37) {
 				// left arrow
 				showPrev();
 				return;
 			}
-			
+
 //				if (whichPress == 32) {
 				// space
-				
+
 			if (whichPress == 68) {
 				// 'd' - relevant
 				changeRelevance(entries[showingIdx], 2);
@@ -50,44 +50,44 @@
 				changeRelevance(entries[showingIdx], 1);
 				return;
 			}
-			
+
 			if (whichPress == 65) {
 				// 'a' - not relevant
 				changeRelevance(entries[showingIdx], 0);
 				return;
 			}
-			
+
 
 		}
-		
+
 		$(document).ready( function() {
 			self.focus();
 			$('#entries').children(':first').toggle();
 			$('#showingSpan').html(showingIdx + '');
-		
+
 			$(document).keyup(keyCommands);
 
 		});
-		
-		
+
+
 		function refreshRelCount() {
 			var relCount = $('img.relevant').length;
 			var notRelCount = $('img.not_relevant').length;
-			
+
 			$('#relevantCount').html(relCount + '');
 			$('#nonRelevantCount').html(notRelCount + '');
-			
-			
+
+
 		}
-		
+
 		function listRelevant() {
 			var relIds = $('img.relevant').map(function(i,n) {
 				return n.id.split(/_/)[1];
 			});
-			
+
 			alert(relIds.length);
 		}
-		
+
 		// relevance feedback stuff
 
 			function changeRelevance(id_to_change, val_to_set) {
@@ -110,22 +110,22 @@
 		      		case 2:
 						classToAdd = 'relevant';
 						classToRemove = 'not_relevant partially_relevant';
-						break;  
+						break;
 					default:
 						classToAdd = '';
 						classToRemove= '';
 				}
-				
+
 				var imgToChange = $('#img_' + id_to_change);
 				imgToChange.addClass(classToAdd);
 				imgToChange.removeClass(classToRemove);
 				$('#loadStatus').html('Loading...');
-		    	
+
 				var successFunction = function(id) {
 					setTimeout("$('#loadStatus').html('Ready.'); showNext(); refreshRelCount(); $(document).keyup(keyCommands);", 500);
 //					showNext();
 
-					
+
 				}
 
 				var failureFunction = function(err_xhr) {
@@ -146,12 +146,12 @@
 			$('#current_pos').html((showingIdx + 1) + '');
 			$('#total_entries').html($('#entries').children().length + '');
 		}
-		
+
 		function showNext() {
 			var nextIdx = (showingIdx + 1) % entries.length;
 			change(showingIdx, nextIdx);
 			refreshCurrentPosition();
-			
+
 			// do we need to load up more images?
 			if (showingIdx % 10 == 0) {
 				// grab the next ten to load:
@@ -162,7 +162,7 @@
 					$('#img_' + id).attr('src', entry_id_fname_hash[id]);
 				}
 			}
-			
+
 		}
 
 		function showPrev() {
@@ -170,11 +170,11 @@
 			change(showingIdx, prevIdx);
 			refreshCurrentPosition();
 		}
-		
+
 		function change(oldIdx, newIdx) {
 			var oldObj = $('#entry_' + entries[oldIdx]);
 			var newObj = $('#entry_' + entries[newIdx]);
-			
+
 			oldObj.toggle();
 			newObj.toggle();
 			showingIdx = newIdx;
@@ -188,45 +188,45 @@
 	body {
 		background-color: #878787;
 	}
-	
+
 	div.entry {
 		text-align: center;
 		display: none;
 	}
-	
+
 	img.relevant {
 		margin: 0px;
 		border: 5px solid #58DF80;
 	}
-	
+
 	img.partially_relevant {
 		margin: 0px;
 		border: 5px solid #9AD4ED;
 	}
-	
+
 	img.not_relevant {
 		margin: 0px;
 		border: 5px solid #DF6B6B;
 	}
-		
+
 	img.unmarked {
 		margin: 5px;
 	}
-	
-	
+
+
 	div.caption {
 		width: 600px;
 		margin-left: auto;
 		margin-right: auto;
 	}
-	
+
 	div#entries {
 		height: 600px;
 		padding: 20px;
 		text-align: center;
 		margin-bottom: 5em;
 	}
-	
+
 	.current {
 		background-color: yellow;
 	}
@@ -237,7 +237,7 @@
 <% if @entries.size == 0 %>
 
 Sorry,there are not records for this topic
-	
+
 <% else %>
 
 	<%= @entries.size %> entries.
@@ -249,16 +249,16 @@ Sorry,there are not records for this topic
 
 	<div id="entries">
 
-		<% 
+		<%
 		count = 0
-		@entries.each do |ent| 
+		@entries.each do |ent|
 				# calculate class:
 				recordJudgment=ent.judgments.first
                 relevance=nil
                 if not recordJudgment.nil?
                   relevance=recordJudgment.relevance
-                end 
-                
+                end
+
                 thisClass="unmarked"
                 case relevance
                     when 0
@@ -275,15 +275,15 @@ Sorry,there are not records for this topic
 					path = ''
 				end
 				count = count + 1
-                
+
 		%>
-		
+
 			<div id="entry_<%= ent.id %>" class="entry">
 				<%= link_to( image_tag(ent.record.image_full_path, html_options={:class => thisClass, :id => "img_#{ent.id.to_s}" , :border => '0'}) , {:controller => "record", :action => "show", :id => ent.record.id}, {:target => '_blank'})%>
 				<p/>
 				<div class="caption"><strong><%= ent.record.title %>:</strong> <%= ent.record.parsed_caption %></div>
 			</div>
-		
+
 		<% end %>
 
 	</div>
